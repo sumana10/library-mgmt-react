@@ -1,7 +1,17 @@
-.App {
+/* .App {
   text-align: center;
+} */
+
+.form-container {
+  display: flex;
+  justify-content: center;
 }
 
+form {
+  width: 600px;
+}
+
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +45,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

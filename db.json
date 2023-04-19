@@ -1,0 +1,45 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "books": [
+    {
+      "name": "The Gap and the Gain ",
+      "author": " Dan Sullivan ",
+      "category": "Self Help",
+      "language": "English",
+      "isbn": "1401964362",
+      "id": 3
+    },
+    {
+      "name": "Finish What You Start",
+      "author": " Peter Hollins",
+      "category": "Personal Development",
+      "language": "English",
+      "isbn": "164743050X",
+      "id": 6
+    }
+  ],
+  "user": [
+    {
+      "id": 1,
+      "email": "sumana@gmail.com",
+      "password": "123456",
+      "role": "librarian"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
