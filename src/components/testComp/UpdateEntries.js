@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer"
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Header from "../core/Header";
+import Footer from "../core/Footer";
+import {updateBooks, getBooksByID} from "./helper/bookapicall"
 
-const BookEntries = () => {
+
+const UpdateEntries = () => {
 
 
   const [values, setValues] = useState({
@@ -18,9 +20,22 @@ const BookEntries = () => {
 const {name, author, category, language, isbn} = values;
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('id');
 
   let url = "http://localhost:3000/books";
+  let puturl = url + "/" + id;
 
+  useEffect(() => {
+    preload()
+  }, []);
+  
+
+  const preload = () =>{
+    getBooksByID(id).then(res => setValues(res))
+  }
+
+ 
 
   const saveBooks = () => {
     let newObj = {
@@ -31,13 +46,8 @@ const {name, author, category, language, isbn} = values;
         isbn,
     };
 
-    axios
-      .post(url, newObj)
-      .then((res) => {
-        console.log(res);
-        navigate("/showbooks");
-      })
-      .catch((err) => console.log(err));
+    axios.put(puturl, newObj).then(res =>{ console.log(res); navigate('/showbooks');})
+         .catch(err => console.log(err))
   };
 
   return (
@@ -46,7 +56,7 @@ const {name, author, category, language, isbn} = values;
     <div className="d-flex flex-column min-vh-100">
       <div className="container">
         <div className="my-4 text-center">
-          <h1>Book Entry Form</h1>
+          <h1>Book Update Form</h1>
         </div>
         <div className="form-group mb-3">
           <label htmlFor="name"></label>
@@ -104,8 +114,8 @@ const {name, author, category, language, isbn} = values;
             onChange={(e) => setValues({...values, category: e.target.value})}
           />
         </div>
-        <button className="btn bg-primary text-white" style={{display:"block", width:"100%"}} onClick={() => saveBooks()}>
-          Enter Books
+        <button className="btn btn-primary" style={{display:"block", width:"100%"}} onClick={() => saveBooks()}>
+          Update Books
         </button>
       </div>
     </div>
@@ -114,4 +124,4 @@ const {name, author, category, language, isbn} = values;
   );
 };
 
-export default BookEntries;
+export default UpdateEntries;

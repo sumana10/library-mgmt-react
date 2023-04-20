@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../utils/UserContext";
+import UserContext from "../../utils/UserContext";
+
 
 const Login = () => {
+
+  const context = useContext(UserContext);
   const navigate = useNavigate();
 
-  const url = "http://localhost:3000/user?role=librarian";
+  const url = "http://localhost:3000/user";
 
   const [data, setData] = useState({
     email: "",
@@ -18,7 +21,7 @@ const Login = () => {
 
   const { email, password, role } = data;
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+ // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     getUser();
@@ -33,8 +36,23 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    if (value[0].email === email && value[0].password === password)
-      navigate("/showbooks");
+
+    console.log(role);
+
+    if(role === "Librarian"){
+      if (value[0].email === email && value[0].password === password){
+
+        context.setUser({ email: email, role: role });
+
+        navigate("/listbooks");
+
+      }
+   }else if(role === "Member"){
+
+    context.setUser({ email: email, role: role });
+    navigate("/listofavailable");
+   }
+      
      else alert("Authentication Fail");
   };
 
@@ -46,7 +64,7 @@ const Login = () => {
     <div class="d-flex flex-column min-vh-100">
       <div class="container" style={formStyle}>
         <div class="my-4 text-center">
-          <h1>Login Form</h1>
+          <h1>Welcome Readers...</h1>
         </div>
         <div class="form-group mb-2">
           <label for="name"></label>

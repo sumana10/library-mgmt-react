@@ -1,52 +1,59 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import Header from "./Header";
-import Footer from "./Footer";
-import { getBooks, deleteBooks} from "./libarian/helper/bookapicall";
+// import {getBooks, deleteBooks} from "./helper/bookapicall";
+import UserContext from "../../utils/UserContext";
+import {getData, deleteData} from "../helper/apicalls"
 
-const ShowBooks = () => {
-  
+
+const ListBooks = () => {
+  const context = useContext(UserContext);
+
 
   const navigate = useNavigate();
   const [values, setValues] = useState([]);
 
+  const books = "books";
+
   const preload = () =>{
-    getBooks().then(res => setValues(res))
+    getData(books).then(res => setValues(res))
   }
 
   useEffect(() => {
     preload()
   }, []);
 
-
-  // const handleDelete = (id) => {
-  //   const deleteurl = url + "/" + id;
-  //   axios.delete(deleteurl).then(() => {
-  //     setValues(values.filter(value => value.id !== id));
-  //   });
-  // };
-
   const handleDelete = (id) => {
-    deleteBooks(id).then((data)=>{
+    deleteData(id, books).then((data)=>{
       preload();
   })
 }
 
   const handleUpdate = (id) => {
-    const updateurl = `/bookupdate?id=${id}`;
-    console.log(updateurl);
-    navigate(updateurl);
+
+    const updateurl = `/addbooks?id=${id}`;
+    navigate(updateurl)
+
   }
 
+  if (context.user?.role !== 'Librarian') {
+		return  navigate('/', { replace: true });
+	}
+  // if (!context.user?.role || (context.user?.role !== "Librarian" && context.user?.role !== "OtherRole")) {
+  //   return navigate('/some-other-page', { replace: true });
+  // }
+  
   return (
     <>
-    <Header/>
+  
     <div className="d-flex flex-column min-vh-100">
       <div className="container">
-       <div className="my-4 text-center">
-          <h1>Book Shelve</h1>
-        </div>
+      <div class="my-4 d-flex justify-content-between align-items-center">
+  <h1 class="mb-0">List Of Books</h1>
+  <button class="btn btn-primary" type="button" onClick={() => navigate("/addbooks")}>Add Books</button>
+</div>
+
+
         <table className="table">
           <thead>
             <tr>
@@ -89,9 +96,9 @@ const ShowBooks = () => {
         </table>
       </div>
     </div>
-    <Footer/>
+    
     </>
   );
 };
 
-export default ShowBooks;
+export default ListBooks;

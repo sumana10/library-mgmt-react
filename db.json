@@ -15,11 +15,14 @@
   ],
   "books": [
     {
-      "name": "The Gap and the Gain ",
+      "name": "The Gap and the Gain",
       "author": " Dan Sullivan ",
-      "category": "Self Help",
+      "category": "self-help",
       "language": "English",
       "isbn": "1401964362",
+      "quantity": "5",
+      "damage": 0,
+      "availability": true,
       "id": 3
     },
     {
@@ -28,7 +31,65 @@
       "category": "Personal Development",
       "language": "English",
       "isbn": "164743050X",
+      "availability": true,
+      "quantity": 1,
+      "damage": 0,
       "id": 6
+    },
+    {
+      "name": "DEEP WORK",
+      "author": " Cal Newport",
+      "category": "non-fiction",
+      "language": "English",
+      "isbn": "9780349413686",
+      "quantity": "1",
+      "damage": "0",
+      "availability": true,
+      "id": 9
+    },
+    {
+      "name": "The Psychology of Money",
+      "author": "Morgan Housel",
+      "category": "non-fiction",
+      "language": "English",
+      "isbn": "9390166268",
+      "quantity": "1",
+      "damage": "0",
+      "availability": true,
+      "id": 10
+    },
+    {
+      "name": "The Intelligent Investor",
+      "author": " Benjamin Graham ",
+      "category": "investing value",
+      "language": "English",
+      "isbn": "9780062312686",
+      "quantity": "2",
+      "damage": "0",
+      "availability": true,
+      "id": 11
+    },
+    {
+      "name": "Atomic Habits...",
+      "author": " James Clear",
+      "category": "Self Help",
+      "language": "English",
+      "isbn": "1847941834",
+      "quantity": "1",
+      "damage": "0",
+      "availability": true,
+      "id": 12
+    },
+    {
+      "name": "The Power of Your Subconscious Mind.......",
+      "author": "Dr Joseph Murphy",
+      "category": "self-help",
+      "language": "English",
+      "isbn": "0143453602",
+      "quantity": "10",
+      "damage": "0",
+      "availability": true,
+      "id": 13
     }
   ],
   "user": [
@@ -37,6 +98,46 @@
       "email": "sumana@gmail.com",
       "password": "123456",
       "role": "librarian"
+    },
+    {
+      "id": 2,
+      "email": "sumana@gmail.com",
+      "password": "1234567",
+      "role": "member"
+    }
+  ],
+  "members": [
+    {
+      "name": "Sumana",
+      "email": "sum@gmail.com",
+      "phone": "06291068170",
+      "issuedate": "2023-04-30",
+      "expiredate": "2023-04-20",
+      "fine": 0,
+      "borrowing": "The Power of Your Subconscious Mind, Atomic Habits",
+      "id": 2
+    },
+    {
+      "name": "John Smith",
+      "email": "jsmith@gmail.com",
+      "phone": "555-555-5555",
+      "issuedate": "2023-05-31",
+      "expiredate": "2023-04-20",
+      "fine": 0,
+      "borrowing": "The Power of Your Subconscious Mind, Atomic Habits",
+      "id": 3
+    }
+  ],
+  "payment": [
+    {
+      "member_id": "12345",
+      "membership_type": "annual",
+      "amount_due": 50,
+      "date_due": "2023-05-01",
+      "date_paid": "2023-04-20",
+      "payment_method": "credit_card",
+      "transaction_id": "ABC123",
+      "notes": "Payment for annual membership renewal"
     }
   ],
   "profile": {
