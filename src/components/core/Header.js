@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../utils/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -7,11 +7,21 @@ const Header = () => {
   const context = useContext(UserContext);
   console.log(context);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const categories = ["listofavailable", "listofdamaged", "Available Books", "Damaged Books"];
+
+  const toggleOpen = () => setIsOpen(!isOpen);
+
+  const menuClass = `dropdown-menu${isOpen ? " show" : ""}`;
+
+
   return (
+    <>
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <NavLink className="navbar-brand" to="/" style={{ marginLeft: "50px" }}>
         {context.user && context.user.role
-          ? context.user.role
+          ? (context.user.role).toUpperCase()
           : " Book Reading App"}
       </NavLink>
       <button
@@ -27,7 +37,7 @@ const Header = () => {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav mx-auto">
-          {context.user && context.user.role === "Librarian" ? (
+          {context.user && context?.user.role === "librarian" ? (
             <>
               {/* <li className="nav-item">
             <NavLink className="nav-link text-white" to="/addbooks">
@@ -35,17 +45,19 @@ const Header = () => {
             </NavLink>
           </li> */}
               <li className="nav-item">
-                <NavLink className="nav-link text-white" to="/listbooks">
+                <NavLink className="nav-link text-white text-uppercase" to="/listbooks">
                   Manage Books
                 </NavLink>
+
               </li>
+              {/* <NavLink to='/listbooks/listofavailable'>Featured</NavLink> */}
               {/* <li className="nav-item">
             <NavLink className="nav-link text-white" to="/addmembers">
               Register Member
             </NavLink>
           </li> */}
               <li className="nav-item">
-                <NavLink className="nav-link text-white" to="/listmembers">
+                <NavLink className="nav-link text-white text-uppercase" to="/listmembers">
                   Manage Members
                 </NavLink>
               </li>
@@ -54,8 +66,32 @@ const Header = () => {
               Not Returned Books
             </NavLink>
           </li> */}
+          {/* <li className="nav-item dropdown" onClick={toggleOpen}>
+            <NavLink
+              to="#"
+              className="nav-link dropdown-toggle"
+              id="navbarDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Categories
+            </NavLink>
+            <div className={menuClass} aria-labelledby="navbarDropdown">
+              {categories && categories.map((cat, index) => (
+                <NavLink
+                  key={cat.id}
+                  className="dropdown-item"
+                  to={`/listbooks/${cat}`}
+                >
+                  {cat}
+                </NavLink>
+              ))}
+            </div>
+          </li>  */}
               <li className="nav-item">
-                <NavLink className="nav-link text-white" to="/payment">
+                <NavLink className="nav-link text-white text-uppercase" to="/payment">
                   Payment
                 </NavLink>
               </li>
@@ -67,20 +103,25 @@ const Header = () => {
             </NavLink>
           </li> */}
             </>
-          ) : context.user && context.user.role === "Member" ? (
+          ) : context.user && context?.user?.role === "member" ? (
             <>
               <li className="nav-item">
-                <NavLink className="nav-link text-white" to="/listofavailable">
+                <NavLink className="nav-link text-white text-uppercase" to="/listofavailable">
                   Available Book
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link text-white" href="#">
+                <NavLink className="nav-link text-white text-uppercase" to="/cart">
                   Cart
                 </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-white" href="#">
+                <NavLink className="nav-link text-white text-uppercase" to="/borrowed">
+                  BorrowedList
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-white text-uppercase" to="#">
                   Not Returned Books
                 </a>
               </li>
@@ -98,7 +139,7 @@ const Header = () => {
         </ul>
         {context.user && context.user.role ? (
            <button
-           className="btn text-white"
+           className="btn btn-outline-light me-4"
            onClick={() => {
              context.setUser(null);
            }}
@@ -110,7 +151,10 @@ const Header = () => {
         )}
        
       </div>
+     
     </nav>
+    {/* <Outlet/> */}
+    </>
   );
 };
 

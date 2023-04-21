@@ -9,6 +9,24 @@ export const getData = (argument) => {
   return axios.get(URL+argument).then((res) => (result = res.data)).catch(err => console.log(err));
 };
 
+export const getDataAvailable = (argument) => {
+  return axios.get(URL+argument).then((res) =>{
+
+   return res.data.filter((book) => book.availability)
+
+  })
+  .catch(err => console.log(err));
+};
+export const getDamagedBooks = (argument) => {
+  return axios.get(URL+argument).then((res) =>{
+
+   return res.data.filter(book => book.damage > 0)
+
+  })
+  .catch(err => console.log(err));
+};
+
+
 export const addData = (data, argument) =>{
   return axios.post(URL+argument, data);
 }
@@ -27,5 +45,12 @@ export const getDataByID = (id, argument) =>{
   const fetchByIDURL = URL+argument + "/" + id;
   return axios.get(fetchByIDURL).then((res) => (result = res.data)).catch(err => console.log(err));
 
+
+}
+
+export const getBorrowedDetails = (id) =>{
+
+  const fetchByIDURL = URL+ "borrowing" + "?member_id=" + id;
+  return axios.get(fetchByIDURL).then((res) => (result = res.data)).catch(err => console.log(err));
 
 }

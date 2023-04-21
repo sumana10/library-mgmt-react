@@ -13,7 +13,10 @@ import ListOfMembers from "./components/librarian/ListOfMembers";
 import { useState } from "react";
 import ListOfAvailableBooks from "./components/librarian/ListOfAvailableBooks";
 import Payment from "./components/librarian/Payment";
-
+import ListOfDmagedBooks from "./components/librarian/ListOfDamagedBooks";
+import Cart from "./components/member/Cart";
+import BorrowedList from "./components/member/BorrowedList"
+import { Parent } from "./components/testComp/Parent";
 const App = () => {
 
   const [user, setUser] = useState(null);
@@ -25,11 +28,19 @@ const App = () => {
         <Routes>
           <Route index element={<Login />} />
           <Route path="addbooks" element={<AddBooks />} />
-          <Route path="listbooks" element={<ListBooks />} />
+          <Route path="listbooks" element={<ListBooks />} >
+          <Route path="listofavailable" element={<ListOfAvailableBooks/>} />
+          <Route path="listofdamaged" element={<ListOfDmagedBooks/>} />
+          </Route>
           <Route path="addmembers" element={<AddMembers />} />
           <Route path="listmembers" element={<ListOfMembers />} />
+          
           <Route path="listofavailable" element={<ListOfAvailableBooks/>} />
+          <Route path="cart" element={<Cart/>} />
+          <Route path="borrowed" element={<BorrowedList/>} />
           <Route path="payment" element={<Payment/>} />
+          <Route path="parent" element={<Parent/>} />
+          
         </Routes>
         <Footer />
       </UserContext.Provider>

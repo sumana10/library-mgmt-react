@@ -3,13 +3,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 
-
 const Login = () => {
-
   const context = useContext(UserContext);
   const navigate = useNavigate();
-
-  const url = "http://localhost:3000/user";
 
   const [data, setData] = useState({
     email: "",
@@ -21,13 +17,15 @@ const Login = () => {
 
   const { email, password, role } = data;
 
- // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const url = `http://localhost:3000/user?email=${email}`;
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [url]);
 
-  const getUser = () => {
+  const getUser =  () => {
     axios.get(url).then((res) => {
       console.log(res.data);
 
@@ -36,24 +34,26 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    console.log(value[0]?.role);
 
-    console.log(role);
+    if (value[0]?.role === "librarian") {
+      console.log("hello" + value[0]?.email);
 
-    if(role === "Librarian"){
-      if (value[0].email === email && value[0].password === password){
+      context.setUser({ email: value[0]?.email, role: value[0]?.role });
 
-        context.setUser({ email: email, role: role });
+      console.log(context?.user?.email);
 
-        navigate("/listbooks");
+      navigate("/listbooks");
+    } else if (value[0]?.role === "member") {
+      console.log(value[0]?.email);
 
-      }
-   }else if(role === "Member"){
-
-    context.setUser({ email: email, role: role });
-    navigate("/listofavailable");
-   }
-      
-     else alert("Authentication Fail");
+      context.setUser({ email: value[0]?.email, role: value[0]?.role });
+      console.log(context?.user?.email);
+      navigate("/listofavailable");
+    }
+    else{
+      alert("Authetication Failed")
+    }
   };
 
   const formStyle = {

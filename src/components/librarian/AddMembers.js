@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getDataByID, updateData, addData } from "../helper/apicalls";
 import UserContext from "../../utils/UserContext";
+import { generatePassword } from "../../utils/passwordgenerator";
 
 const AddMembers = () => {
 
@@ -39,6 +40,7 @@ const AddMembers = () => {
   const navigate = useNavigate();
 
   const members = "members";
+  const users = "user";
 
   const preload = () => {
     getDataByID(id, members).then((res) => {
@@ -65,6 +67,8 @@ const AddMembers = () => {
         borrowing,
     };
 
+  
+
     console.log(borrowing);
 
     const array = borrowing.split(",");
@@ -73,9 +77,20 @@ const AddMembers = () => {
     console.log(newObj)
 
     if(!id){
+
+      let password = generatePassword(6);
+
+      let userObj = {
+        "email": email,
+        "password": password,
+        "role": "member"
+      }
       
         addData(newObj, members).then(res => {
           navigate("/listmembers");
+        })
+        addData(userObj, users).then(res => {
+         // navigate("/listmembers");
         })
     }
     else{

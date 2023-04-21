@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
-import { getData } from "../helper/apicalls";
+import { getDataAvailable } from "../helper/apicalls";
+
 
 const ListOfAvailableBooks = () => {
   const context = useContext(UserContext);
@@ -9,27 +10,63 @@ const ListOfAvailableBooks = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState([]);
 
-  const [count, setCount] = useState(0);
+  const [cartData, setCartData] = useState([]);
 
-  const handleIncrement = () => {
-    setCount(count + 1);
-  };
+  const [buttonStates, setButtonStates] = useState({});
+  // const [count, setCount] = useState(0);
 
-  const handleDecrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  };
+  // const handleIncrement = () => {
+  //   setCount(count + 1);
+  // };
+
+  // const handleDecrement = () => {
+  //   if (count > 0) {
+  //     setCount(count - 1);
+  //   }
+  // };
 
   const books = "books";
 
+  const handleAddToCart = (item, id) => {
+    const updatedCartData = [...cartData, item];
+    setCartData(updatedCartData);
+    let email = context.user?.email;
+    console.log(updatedCartData);
+  
+    let cartObject = {
+      "bookname": updatedCartData[0].name,
+      "author": updatedCartData[0].author,
+      "category": updatedCartData[0].category,
+      "member-email": email
+    }
+  
+    // Retrieve existing cart data from local storage, if any
+    const existingCartData = JSON.parse(localStorage.getItem("cartData")) || [];
+  
+    // Add the new cart object to the existing cart data array
+    const updatedCartDataArray = [...existingCartData, cartObject];
+  
+    // Store the updated cart data array into local storage as a stringified JSON object
+    localStorage.setItem("cartData", JSON.stringify(updatedCartDataArray));
+  
+    /* disable button */
+  
+    setButtonStates((prevStates) => ({
+      ...prevStates,
+      [id]: true,
+    }));
+  };
+  
+
   const preload = () => {
-    getData(books).then((res) => setValues(res));
+    getDataAvailable(books).then((res) => setValues(res));
   };
 
   useEffect(() => {
     preload();
   }, []);
+
+  console.log(values);
 
   if (!context.user?.role) {
     return navigate("/", { replace: true });
@@ -37,11 +74,13 @@ const ListOfAvailableBooks = () => {
 
   return (
     <>
+      {/* <Link to="/cart">Borrow</Link> */}
       <div className="d-flex flex-column min-vh-100">
         <div className="container">
           <div className="my-4 text-center">
             <h1 className="bg-default">List Of Available Books</h1>
           </div>
+
           <table className="table">
             <thead>
               <tr>
@@ -49,8 +88,9 @@ const ListOfAvailableBooks = () => {
                 <th>Author</th>
                 <th>Category</th>
                 <th>Language</th>
+                <th>Action</th>
                 {/* <th>ISBN</th> */}
-                <th colSpan={2}>Action</th>
+                {/* <th colSpan={2}>Action</th> */}
               </tr>
             </thead>
             <tbody>
@@ -61,9 +101,10 @@ const ListOfAvailableBooks = () => {
                     <td>{row.author}</td>
                     <td>{row.category}</td>
                     <td>{row.language}</td>
+
                     {/* <td>{row.isbn}</td> */}
 
-                    <div
+                    {/* <div
                       class="btn-group"
                       role="group"
                       aria-label="Counter Button"
@@ -73,12 +114,23 @@ const ListOfAvailableBooks = () => {
                       </button>
                       <button type="button" className="btn btn-primary">
                        {/* {row.quantity} */}
-                       {count}
+                    {/* {count}
                       </button>
                       <button type="button" className="btn btn-primary" onClick={handleIncrement}>
                         +
                       </button>
-                    </div>
+                    </div> */}
+                    <td>
+                      {context.user?.role === "member" && (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleAddToCart(row, row.id)}
+                          disabled={buttonStates[row.id]}
+                        >
+                          Add To Cart
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))}
             </tbody>

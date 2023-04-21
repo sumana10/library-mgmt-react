@@ -21,8 +21,8 @@
       "language": "English",
       "isbn": "1401964362",
       "quantity": "5",
-      "damage": 0,
-      "availability": true,
+      "damage": "0",
+      "availability": false,
       "id": 3
     },
     {
@@ -31,9 +31,9 @@
       "category": "Personal Development",
       "language": "English",
       "isbn": "164743050X",
-      "availability": true,
+      "availability": false,
       "quantity": 1,
-      "damage": 0,
+      "damage": "0",
       "id": 6
     },
     {
@@ -44,7 +44,7 @@
       "isbn": "9780349413686",
       "quantity": "1",
       "damage": "0",
-      "availability": true,
+      "availability": false,
       "id": 9
     },
     {
@@ -65,7 +65,7 @@
       "language": "English",
       "isbn": "9780062312686",
       "quantity": "2",
-      "damage": "0",
+      "damage": "1",
       "availability": true,
       "id": 11
     },
@@ -87,9 +87,20 @@
       "language": "English",
       "isbn": "0143453602",
       "quantity": "10",
-      "damage": "0",
+      "damage": "1",
       "availability": true,
       "id": 13
+    },
+    {
+      "name": "The Little Book of Good Things!",
+      "author": "Bhavya Doshi",
+      "category": "Motivational Book",
+      "language": "English",
+      "isbn": "9394613145",
+      "quantity": "10",
+      "damage": "0",
+      "availability": true,
+      "id": 14
     }
   ],
   "user": [
@@ -101,9 +112,15 @@
     },
     {
       "id": 2,
-      "email": "sumana@gmail.com",
+      "email": "member@gmail.com",
       "password": "1234567",
       "role": "member"
+    },
+    {
+      "email": "mjohnson@yahoo.com",
+      "password": "u&Nfs!",
+      "role": "member",
+      "id": 3
     }
   ],
   "members": [
@@ -123,9 +140,29 @@
       "phone": "555-555-5555",
       "issuedate": "2023-05-31",
       "expiredate": "2023-04-20",
-      "fine": 0,
+      "fine": "50",
       "borrowing": "The Power of Your Subconscious Mind, Atomic Habits",
       "id": 3
+    },
+    {
+      "name": "Sarah Lee",
+      "email": "sarahlee@gmail.com",
+      "phone": "555-123-4567",
+      "issuedate": "2023-04-30",
+      "expiredate": "2023-04-21",
+      "fine": "100",
+      "borrowing": "The Power of Your Subconscious Mind, Atomic Habits",
+      "id": 4
+    },
+    {
+      "name": "Michael Johnson",
+      "email": "mjohnson@yahoo.com",
+      "phone": "555-987-6543",
+      "issuedate": "2023-04-30",
+      "expiredate": "2023-04-21",
+      "fine": 0,
+      "borrowing": "The 7 Habits of Highly Effective People, Think and Grow Rich",
+      "id": 5
     }
   ],
   "payment": [
@@ -138,6 +175,43 @@
       "payment_method": "credit_card",
       "transaction_id": "ABC123",
       "notes": "Payment for annual membership renewal"
+    }
+  ],
+  "borrowing": [
+    {
+      "id": 1,
+      "member_id": "2",
+      "issuedate": "2023-04-21",
+      "returndate": "2023-05-12",
+      "bookname": "To Kill a Mockingbird"
+    },
+    {
+      "member_id": "4",
+      "issuedate": "21-04-2023",
+      "returndate": "21-05-2023",
+      "bookname": "The Psychology of Money",
+      "id": 2
+    },
+    {
+      "member_id": "4",
+      "issuedate": "21-04-2023",
+      "returndate": "21-05-2023",
+      "bookname": "The Psychology of Money",
+      "id": 3
+    },
+    {
+      "member_id": "4",
+      "issuedate": "21-04-2023",
+      "returndate": "21-05-2023",
+      "bookname": "The Intelligent Investor",
+      "id": 4
+    },
+    {
+      "member_id": "4",
+      "issuedate": "21-04-2023",
+      "returndate": "21-05-2023",
+      "bookname": "The Psychology of Money",
+      "id": 5
     }
   ],
   "profile": {
