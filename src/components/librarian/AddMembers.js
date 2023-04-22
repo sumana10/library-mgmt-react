@@ -87,10 +87,11 @@ const AddMembers = () => {
       }
       
         addData(newObj, members).then(res => {
-          navigate("/listmembers");
+        //  navigate("/listmembers");
         })
         addData(userObj, users).then(res => {
          // navigate("/listmembers");
+            navigate("/listmembers");
         })
     }
     else{

@@ -8,9 +8,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
-    email: "",
-    password: "",
-    role: "",
+    email: "member@gmail.com",
+    password: "1234567",
+    role: "member",
   });
 
   const [value, setValues] = useState([]);
@@ -61,37 +61,37 @@ const Login = () => {
     margin: "80px auto",
   };
   return (
-    <div class="d-flex flex-column min-vh-100">
-      <div class="container" style={formStyle}>
-        <div class="my-4 text-center">
+    <div className="d-flex flex-column min-vh-100">
+      <div className="container" style={formStyle}>
+        <div className="my-4 text-center">
           <h1>Welcome Readers...</h1>
         </div>
-        <div class="form-group mb-2">
+        <div className="form-group mb-2">
           <label for="name"></label>
           <input
             type="email"
-            class="form-control"
+            className="form-control"
             id="email"
             value={email}
             placeholder="Enter username"
             onChange={(e) => setData({ ...data, email: e.target.value })}
           />
         </div>
-        <div class="form-group mb-2">
+        <div className="form-group mb-2">
           <label for="date"></label>
           <input
             type="password"
-            class="form-control"
+            className="form-control"
             id="password"
             value={password}
             placeholder="Enter your password"
             onChange={(e) => setData({ ...data, password: e.target.value })}
           />
         </div>
-        <div class="form-group mb-3">
+        <div className="form-group mb-3">
           <label for="category"></label>
           <select
-            class="form-control"
+            className="form-control"
             id="category"
             value={role}
             onChange={(e) => setData({ ...data, role: e.target.value })}
@@ -102,7 +102,7 @@ const Login = () => {
           </select>
         </div>
         <button
-          class="btn btn-primary btn-block"
+          className="btn btn-primary btn-block"
           style={{ display: "block", width: "100%" }}
           onClick={() => handleLogin()}
         >

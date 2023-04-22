@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import { formatDate } from "../../utils/formatedate";
-import { addData } from "../helper/apicalls";
+import { addData, updateMultipleData, updateData, updateSpecificData } from "../helper/apicalls";
 import UserContext from "../../utils/UserContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Cart = () => {
 
   const context = useContext(UserContext);
   const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
   //localStorage.clear();
+  const [bookQuantities, setBookQuantities] = useState({});
 
   const [cart, setCart] = useState(cartData);
   const [data, setData] = useState([]);
@@ -17,23 +19,68 @@ const Cart = () => {
     alert("Clicked")
     // const updatedData = [...data, item];
     // setData(updatedData);
-    // console.log( data[0].name)
-    // const formattedToday = formatDate(0);
-    // const formatted30Days = formatDate(30);
-    // const borrowObject = {
-    //     "member_id": "4",
-    //     "issuedate": formattedToday,
-    //     "returndate": formatted30Days,
-    //     "bookname": data[0].name,
+  //    console.log( cart)
+     const formattedToday = formatDate(0);
+      const formatted30Days = formatDate(30);
+
+      const bookname = cart.filter((book) => book.name);
+
+      console.log(bookname);
+
+    const borrowObject = {
+        "member_id": "4",
+        "issuedate": formattedToday,
+        "returndate": formatted30Days,
+        "bookname": bookname,
+    }
+
+     let borrowing = "borrowing";
+     console.log(borrowObject)
+    console.log("Updated Quantity")
+     const updatedBooks = bookname.map((book) => {
+      const quantity =
+        bookQuantities[book.id] !== undefined
+          ? bookQuantities[book.id]
+          : book.quantity - 1;
+  
+      return { ...book, quantity };
+    });
+
+    console.log(updatedBooks);
+
+   //  const bookurl = "books"
+     const bookurl = "books";
+     for (let i = 0; i < updatedBooks.length; i++) {
+       const bookId = updatedBooks[i].id;
+       const bookData = updatedBooks[i];
+       updateSpecificData(bookData, `${bookId}` , `${bookurl}`)
+         .then(res => console.log(res))
+         .catch(err => console.log(err));
+     }
+     
+
+    // let URL = "http://localhost:3000/"
+
+    // const updateMultipleBookQuantities = (updatedBooks) => {
+    //   updatedBooks.forEach(book => {
+    //     axios.put(`${URL}books/${book.id}`, {quantity: book.quantity})
+    //       .then(response => console.log(response.data))
+    //       .catch(error => console.log(error));
+    //   });
     // }
-    // let borrowing = "borrowing";
-    // console.log(borrowObject)
-    // addData(borrowObject, borrowing).then(res => {
-    //     // navigate("/listmembers");
-    //     alert("borrowed")
-    //   })
+    
+    // console.log(updateMultipleBookQuantities);
+    addData(borrowObject, borrowing).then(res => {
+    
+    localStorage.clear();
+    navigate('/listofavailable')
+
+    })
+    
     //setCart("")
+
     //localStorage.clear();
+    //navigate('/listofavailable')
   };
 
   useEffect(() => {}, []);
@@ -56,9 +103,9 @@ const Cart = () => {
           <h1>{context.user?.email}</h1>
         </div>
         <ul class="list-group">
-          {cart.map((item) => (
-            <li class="list-group-item list-group-item-primary" key={item.id}>
-              {item.bookname} - {item.author} - {item.category}
+          {cart.map((item, index) => (
+            <li class="list-group-item list-group-item-primary" key={item.index}>
+              {item.name} - {item.author} - {item.category}
             </li>
           ))}
         </ul>

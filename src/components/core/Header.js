@@ -111,19 +111,14 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link text-white text-uppercase" to="/cart">
-                  Cart
-                </NavLink>
-              </li>
-              <li className="nav-item">
                 <NavLink className="nav-link text-white text-uppercase" to="/borrowed">
                   BorrowedList
                 </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-white text-uppercase" to="#">
-                  Not Returned Books
-                </a>
+                <NavLink className="nav-link text-white text-uppercase" to="/cart">
+                  Cart
+                </NavLink>
               </li>
               {/* <li className="nav-item">
             <NavLink className="nav-link text-white" style={{ cursor: "pointer" }}

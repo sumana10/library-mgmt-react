@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 import { getDamagedBooks } from "../helper/apicalls";
+import { Link } from "react-router-dom";
 
 const ListOfDmagedBooks = () => {
   const context = useContext(UserContext);
@@ -43,6 +44,18 @@ const ListOfDmagedBooks = () => {
     <>
       <div className="d-flex flex-column min-vh-100">
         <div className="container">
+        <>
+            <nav className="nav nav-tabs mb-4">
+              <Link to="/listofavailable" className="nav-link">
+                Available Books
+              </Link>
+              <Link to="/listofdamaged" className="nav-link">
+                Damaged Books
+              </Link>
+            </nav>
+
+            {/* <Outlet /> */}
+          </>
           <div className="my-4 text-center">
             <h1 className="bg-default">List Of Damaged Books</h1>
           </div>

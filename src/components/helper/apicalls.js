@@ -9,6 +9,10 @@ export const getData = (argument) => {
   return axios.get(URL+argument).then((res) => (result = res.data)).catch(err => console.log(err));
 };
 
+export const getSpecificData = (argument) => {
+  return axios.get(argument).then((res) => (result = res.data)).catch(err => console.log(err));
+};
+
 export const getDataAvailable = (argument) => {
   return axios.get(URL+argument).then((res) =>{
 
@@ -17,6 +21,7 @@ export const getDataAvailable = (argument) => {
   })
   .catch(err => console.log(err));
 };
+
 export const getDamagedBooks = (argument) => {
   return axios.get(URL+argument).then((res) =>{
 
@@ -25,7 +30,6 @@ export const getDamagedBooks = (argument) => {
   })
   .catch(err => console.log(err));
 };
-
 
 export const addData = (data, argument) =>{
   return axios.post(URL+argument, data);
@@ -38,6 +42,20 @@ export const deleteData = (id, argument) =>{
 
 export const updateData = (data, id, argument) =>{
   return axios.put(URL+argument + "/" + id, data);
+}
+
+export const updateSpecificData = (data, id, argument) =>{
+  return axios.patch(URL+argument + "/" + id, data);
+}
+
+export const updateByName = (data, query) =>{
+
+  return axios.patch(query, data);
+
+}
+
+export const updateMultipleData = (data, argument) =>{
+  return axios.patch(URL+argument, data);
 }
 
 export const getDataByID = (id, argument) =>{

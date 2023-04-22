@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 // import {getBooks, deleteBooks} from "./helper/bookapicall";
 import UserContext from "../../utils/UserContext";
 import { getData, deleteData } from "../helper/apicalls";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, Route } from "react-router-dom";
+import ListOfAvailableBooks from "./ListOfAvailableBooks";
+import ListOfDmagedBooks from "./ListOfDamagedBooks";
 
 const ListBooks = () => {
   const context = useContext(UserContext);
@@ -41,6 +43,11 @@ const ListBooks = () => {
   // if (!context.user?.role || (context.user?.role !== "Librarian" && context.user?.role !== "OtherRole")) {
   //   return navigate('/some-other-page', { replace: true });
   // }
+  /** 
+   * 
+   * 
+   * 
+   * **/
 
   return (
     <>
@@ -48,15 +55,15 @@ const ListBooks = () => {
         <div className="container">
           <>
             <nav className="nav nav-tabs mb-4">
-              <Link to="listofavailable" className="nav-link">
+              <Link to="/listofavailable" className="nav-link">
                 Available Books
               </Link>
-              <Link to="listofdamaged" className="nav-link">
+              <Link to="/listofdamaged" className="nav-link">
                 Damaged Books
               </Link>
             </nav>
 
-            <Outlet />
+            {/* <Outlet /> */}
           </>
           <div class="my-4 d-flex justify-content-between align-items-center">
             <h1 class="mb-0">List Of Books</h1>
@@ -111,6 +118,7 @@ const ListBooks = () => {
           </table>
         </div>
       </div>
+       
     </>
   );
 };
