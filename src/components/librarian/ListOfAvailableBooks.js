@@ -167,3 +167,6 @@ const ListOfAvailableBooks = () => {
 };
 
 export default ListOfAvailableBooks;
+
+//now i am setting name, author, quantity, id, category
+//show casing name category name category author

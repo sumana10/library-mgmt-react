@@ -1,68 +1,44 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getBorrowedDetails } from "../helper/apicalls";
-import getReturnedBooks from "../../utils/getReturnedBooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import UserContext from "../../utils/UserContext";
 
-const NotReturnedBooks = () => {
+const ReturnedBooks = () => {
+  const context = useContext(UserContext);
+  const navigate = useNavigate();
 
-
-// const url = `http://localhost:3000/borrowing?member_id=4&&return=true`
-//const context = useContext(UserContext);
-
- // const navigate = useNavigate();
   const [values, setValues] = useState([]);
-
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  const [buttonStates, setButtonStates] = useState({});
-  // const [count, setCount] = useState(0);
 
-  // const handleIncrement = () => {
-  //   setCount(count + 1);
-  // };
-
-  // const handleDecrement = () => {
-  //   if (count > 0) {
-  //     setCount(count - 1);
-  //   }
-  // };
-
-  const books = "borrowing";
-
-  const preload = () => {
-    getBorrowedDetails(4).then((res) => setValues(res));
+  const preload = async () => {
+    try {
+      const res = await getBorrowedDetails(4);
+      setValues(res);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
     preload();
   }, []);
 
-  console.log(values);
-  let bookNames;
   useEffect(() => {
-    bookNames = values
-      .filter(obj => obj.return)
-      .flatMap(obj => obj.bookname)
-      .map(book => ({ name: book.name, quantity: book.quantity }))
-      .filter(name => name);
-
-    setBorrowedBooks(bookNames);
+    if (values.length) {
+      let bookNames = values
+        .filter((book) => book.return)
+        .map((book) => book.bookname)
+        .flat();
+      console.log(bookNames);
+      setBorrowedBooks(bookNames);
+    }
   }, [values]);
 
-  console.log(bookNames)
-// let bookNames;
-// useEffect(() => {
-//   bookNames = values
-//     .flatMap(obj => obj.bookname)
-//     .map(book => book.name)
-//     .filter(name => name);
+  console.log(values);
 
-//   setBorrowedBooks(bookNames);
-// }, [values]);
-
-// const returnedBooks = getReturnedBooks(values);
-
-
-
+  if (!context.user?.role) {
+    return navigate("/", { replace: true });
+  }
   return (
     <div class="d-flex flex-column min-vh-100">
       <div class="container">
@@ -85,14 +61,13 @@ const NotReturnedBooks = () => {
             </tr>
           </thead>
           <tbody>
-          {borrowedBooks &&
-                borrowedBooks.map((row, index) => ( 
-            <tr>
-              <td>{row.name}</td>
-              <td>22-05-2023</td>
-            </tr>
-           
-             ))} 
+            {borrowedBooks &&
+              borrowedBooks.map((row, index) => (
+                <tr>
+                  <td>{row}</td>
+                  <td>22-05-2023</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -100,4 +75,4 @@ const NotReturnedBooks = () => {
   );
 };
 
-export default NotReturnedBooks;
+export default ReturnedBooks;

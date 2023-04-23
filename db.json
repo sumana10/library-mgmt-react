@@ -20,7 +20,7 @@
       "category": "self-help",
       "language": "English",
       "isbn": "1401964362",
-      "quantity": 11,
+      "quantity": 5,
       "damage": "1",
       "availability": true,
       "id": 3
@@ -32,20 +32,9 @@
       "language": "English",
       "isbn": "164743050X",
       "availability": true,
-      "quantity": 48,
+      "quantity": 43,
       "damage": "1",
       "id": 6
-    },
-    {
-      "name": "The Gap and the Gain",
-      "author": " Cal Newport",
-      "category": "non-fiction",
-      "language": "English",
-      "isbn": "9780349413686",
-      "quantity": 50,
-      "damage": "1",
-      "availability": true,
-      "id": 9
     },
     {
       "id": 10,
@@ -212,72 +201,24 @@
   "borrowing": [
     {
       "member_id": "4",
-      "issuedate": "22-04-2023",
-      "returndate": "22-05-2023",
+      "issuedate": "23-04-2023",
+      "returndate": "23-05-2023",
       "return": false,
       "bookname": [
-        {
-          "id": 9,
-          "name": "DEEP WORK",
-          "author": " Cal Newport",
-          "category": "non-fiction",
-          "quantity": 9
-        }
+        "Finish What You Start",
+        "The Gap and the Gain"
       ],
-      "id": 7
+      "id": 1
     },
     {
       "member_id": "4",
-      "issuedate": "22-04-2023",
-      "returndate": "22-05-2023",
-      "return": true,
+      "issuedate": "23-04-2023",
+      "returndate": "23-05-2023",
       "bookname": [
-        {
-          "id": 3,
-          "name": "The Gap and the Gain",
-          "author": " Dan Sullivan ",
-          "category": "self-help",
-          "quantity": "50"
-        },
-        {
-          "id": 6,
-          "name": "Finish What You Start",
-          "author": " Peter Hollins",
-          "category": "Personal Development",
-          "quantity": "10"
-        }
+        "Finish What You Start"
       ],
-      "id": 8
-    },
-    {
-      "member_id": "6",
-      "issuedate": "22-04-2023",
-      "returndate": "22-05-2023",
-      "return": true,
-      "bookname": [
-        {
-          "id": 3,
-          "name": "The Gap and the Gain",
-          "author": " Dan Sullivan ",
-          "category": "self-help",
-          "quantity": 51
-        },
-        {
-          "id": 6,
-          "name": "The Gap and the Gain",
-          "author": " Peter Hollins",
-          "category": "Personal Development",
-          "quantity": 49
-        },
-        {
-          "id": 9,
-          "name": "The Gap and the Gain",
-          "author": " Cal Newport",
-          "category": "non-fiction",
-          "quantity": 51
-        }
-      ],
-      "id": 9
+      "return": false,
+      "id": 4
     }
   ],
   "profile": {

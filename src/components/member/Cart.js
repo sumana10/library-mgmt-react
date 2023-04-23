@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { formatDate } from "../../utils/formatedate";
-import { addData, updateMultipleData, updateData, updateSpecificData } from "../helper/apicalls";
+import { addData, updateMultipleData, updateData, updateSpecificData, getBooks } from "../helper/apicalls";
 import UserContext from "../../utils/UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -14,73 +14,91 @@ const Cart = () => {
   const [cart, setCart] = useState(cartData);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const handleClick = () => {
 
-    alert("Clicked")
-    // const updatedData = [...data, item];
-    // setData(updatedData);
-  //    console.log( cart)
-     const formattedToday = formatDate(0);
-      const formatted30Days = formatDate(30);
+  const [books, setBooks] = useState([]);
+  const [updatedbooks, setUpdatedBooks] = useState([]);
 
-      const bookname = cart.filter((book) => book.name);
+  const bookIds = cart.map((book) => book.id);
+  console.log(bookIds);
 
-      console.log(bookname);
+  const preload = async () => {
+    try {
+      const res = await getBooks(bookIds);
+      setBooks(res);
+      console.log(books);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    preload();
+  }, []);
+
+
+
+  const handleClick = async() => {
+
+    alert("Borrowed")
+
+    const formattedToday = formatDate(0);
+    const formatted30Days = formatDate(30);
+
+
+    const booksToBorrow = cart.map((book) => book.name);
 
     const borrowObject = {
         "member_id": "4",
         "issuedate": formattedToday,
         "returndate": formatted30Days,
-        "bookname": bookname,
+        "bookname": booksToBorrow,
+        "return": false,
     }
 
      let borrowing = "borrowing";
-     console.log(borrowObject)
-    console.log("Updated Quantity")
-     const updatedBooks = bookname.map((book) => {
-      const quantity =
-        bookQuantities[book.id] !== undefined
-          ? bookQuantities[book.id]
-          : book.quantity - 1;
-  
-      return { ...book, quantity };
-    });
-
-    console.log(updatedBooks);
-
-   //  const bookurl = "books"
-     const bookurl = "books";
-     for (let i = 0; i < updatedBooks.length; i++) {
-       const bookId = updatedBooks[i].id;
-       const bookData = updatedBooks[i];
-       updateSpecificData(bookData, `${bookId}` , `${bookurl}`)
-         .then(res => console.log(res))
-         .catch(err => console.log(err));
-     }
+     console.log(borrowObject);
      
+     console.log(bookIds);
+     console.log(books)
 
-    // let URL = "http://localhost:3000/"
+     const updatedData = books.map(item => {
+      if (bookIds.includes(item.id)) {
 
-    // const updateMultipleBookQuantities = (updatedBooks) => {
-    //   updatedBooks.forEach(book => {
-    //     axios.put(`${URL}books/${book.id}`, {quantity: book.quantity})
-    //       .then(response => console.log(response.data))
-    //       .catch(error => console.log(error));
-    //   });
-    // }
+        console.log(item)
+       return { ...item, quantity: item.quantity - 1 };
+      } else {
+        return item;
+      }
+    });
+  setBooks(updatedData);
+  console.log(updatedData);
+
+    console.log("updated quantity");
+    console.log(updatedData);
+
+     const bookurl = "books";
+  
+
+     for (let i = 0; i < updatedData.length; i++) {
+      const bookId = updatedData[i].id;
+      const bookData = updatedData[i];
+      try {
+        const res = await updateSpecificData(bookData, `${bookId}`, `${bookurl}`);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     
-    // console.log(updateMultipleBookQuantities);
-    addData(borrowObject, borrowing).then(res => {
+   
+   addData(borrowObject, borrowing).then(res => {
     
-    localStorage.clear();
-    navigate('/listofavailable')
+     localStorage.clear();
+     navigate('/listofavailable')
 
     })
     
-    //setCart("")
 
-    //localStorage.clear();
-    //navigate('/listofavailable')
   };
 
   useEffect(() => {}, []);
@@ -89,9 +107,7 @@ const Cart = () => {
     margin: "80px auto",
   };
 
-  // const listItemStyle = {
-  //   marginLeft: "20px",
-  // }
+
   if (!context.user?.role) {
     return navigate("/", { replace: true });
   }

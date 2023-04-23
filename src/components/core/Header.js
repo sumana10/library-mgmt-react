@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const context = useContext(UserContext);
   console.log(context);
-
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const categories = ["listofavailable", "listofdamaged", "Available Books", "Damaged Books"];
@@ -14,6 +14,11 @@ const Header = () => {
   const toggleOpen = () => setIsOpen(!isOpen);
 
   const menuClass = `dropdown-menu${isOpen ? " show" : ""}`;
+
+  
+  // if (!context.user?.role) {
+  //   return navigate("/", { replace: true });
+  // }
 
 
   return (

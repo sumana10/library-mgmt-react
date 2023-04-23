@@ -10,8 +10,11 @@ export const getData = (argument) => {
 };
 
 export const getSpecificData = (argument) => {
-  return axios.get(argument).then((res) => (result = res.data)).catch(err => console.log(err));
+  return axios.get(argument)
+    .then((res) => res.data)
+    .catch(err => console.log(err));
 };
+
 
 export const getDataAvailable = (argument) => {
   return axios.get(URL+argument).then((res) =>{
@@ -44,9 +47,15 @@ export const updateData = (data, id, argument) =>{
   return axios.put(URL+argument + "/" + id, data);
 }
 
-export const updateSpecificData = (data, id, argument) =>{
-  return axios.patch(URL+argument + "/" + id, data);
-}
+export const updateSpecificData = async (data, id, argument) => {
+  try {
+    const response = await axios.patch(URL+argument + "/" + id, data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to update data");
+  }
+};
 
 export const updateByName = (data, query) =>{
 
@@ -72,3 +81,30 @@ export const getBorrowedDetails = (id) =>{
   return axios.get(fetchByIDURL).then((res) => (result = res.data)).catch(err => console.log(err));
 
 }
+//http://localhost:3000/books?id=12&id=13&id=14
+
+export const getBooks = (ids) => {
+  let url = 'http://localhost:3000/books?';
+  
+  for (let i = 0; i < ids.length && i < 3; i++) {
+    url += `id=${ids[i]}&`;
+  }
+
+  return axios.get(url).then((res) => (result = res.data)).catch(err => console.log(err));
+}
+
+
+// export const updateBooks = (ids, data) => {
+//   const idList = ids.join(',');
+//   const url = `http://localhost:3000/books?id=${idList}`;
+
+//   return axios.put(url, data, { headers: { 'Content-Type': 'application/json' } })
+//     .then(response => {
+//       console.log('Data updated successfully');
+//       return response.data;
+//     })
+//     .catch(error => {
+//       console.error('Error updating data:', error);
+//       throw error;
+//     });
+// };

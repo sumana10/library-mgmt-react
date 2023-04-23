@@ -1,35 +1,35 @@
-[{
-    "id": 1,
-    "member_id": "2",
-    "issuedate": "2023-04-21",
-    "returndate": "2023-05-12",
-    "bookname": "To Kill a Mockingbird"
+[
+  {
+      "member_id": "4",
+      "issuedate": "23-04-2023",
+      "returndate": "23-05-2023",
+      "return": true,
+      "bookname": [
+          "Finish What You Start",
+          "The Gap and the Gain"
+      ],
+      "id": 1
   },
   {
-    "member_id": "4",
-    "issuedate": "21-04-2023",
-    "returndate": "21-05-2023",
-    "bookname": "The Psychology of Money",
-    "id": 2
+      "member_id": "4",
+      "issuedate": "23-04-2023",
+      "returndate": "23-05-2023",
+      "return": false,
+      "bookname": [
+          "Finish What You Start",
+          "The Gap and the Gain"
+      ],
+      "id": 2
   },
   {
-    "member_id": "4",
-    "issuedate": "21-04-2023",
-    "returndate": "21-05-2023",
-    "bookname": "The Psychology of Money",
-    "id": 3
-  },
-  {
-    "member_id": "4",
-    "issuedate": "21-04-2023",
-    "returndate": "21-05-2023",
-    "bookname": "The Intelligent Investor",
-    "id": 4
-  },
-  {
-    "member_id": "4",
-    "issuedate": "21-04-2023",
-    "returndate": "21-05-2023",
-    "bookname": "The Psychology of Money",
-    "id": 5
-  }]
+      "member_id": "4",
+      "issuedate": "23-04-2023",
+      "returndate": "23-05-2023",
+      "bookname": [
+          "Finish What You Start",
+          "The Gap and the Gain"
+      ],
+      "return": false,
+      "id": 3
+  }
+]

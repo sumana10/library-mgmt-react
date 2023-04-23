@@ -42,14 +42,12 @@ const App = () => {
           <Route path="listofdamaged" element={<ListOfDmagedBooks />} />
           <Route path="addmembers" element={<AddMembers />} />
           <Route path="listmembers" element={<ListOfMembers />} />
-
           <Route path="listofavailable" element={<ListOfAvailableBooks />} />
           <Route path="cart" element={<Cart />} />
           <Route path="borrowed" element={<BorrowedList />}></Route>
           <Route path="returnedbooks" element={<ReturnedBooks />} />
           <Route path="notreturnedbooks" element={<NotReturnedBooks />} />
           <Route path="payment" element={<Payment />} />
-          
         </Routes>
         <Footer />
       </UserContext.Provider>
