@@ -77,7 +77,7 @@ export const getDataByID = (id, argument) =>{
 
 export const getBorrowedDetails = (id) =>{
 
-  const fetchByIDURL = URL+ "borrowing" + "?member_id=" + id;
+  const fetchByIDURL = URL+ "borrowing" + "?member_id=" + id + "&return=false";
   return axios.get(fetchByIDURL).then((res) => (result = res.data)).catch(err => console.log(err));
 
 }

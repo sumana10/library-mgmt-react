@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-      <NavLink className="navbar-brand" to="/" style={{ marginLeft: "50px" }}>
+      <NavLink className="navbar-brand" to="/listofavailable" style={{ marginLeft: "50px" }}>
         {context.user && context.user.role
           ? (context.user.role).toUpperCase()
           : " Book Reading App"}

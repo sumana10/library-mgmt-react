@@ -6,6 +6,7 @@ import {
   updateSpecificData,
   updateByName,
   getSpecificData,
+  updateData,
 } from "../helper/apicalls";
 import { Outlet, Link } from "react-router-dom";
 
@@ -18,8 +19,10 @@ const BorrowedList = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [buttonStates, setButtonStates] = useState({});
   const [bookData, setBookData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
-//Initial loading of borrowing list
+
+  //Initial loading of borrowing list
   const preload = async () => {
     try {
       const res = await getBorrowedDetails(4);
@@ -33,112 +36,87 @@ const BorrowedList = () => {
     preload();
   }, []);
 
+  useEffect(() => {
+    preload();
+  }, [refresh]);
+
   console.log("I AM BORROWED DATA");
   console.log(values);
 
   //Filter data which are not returned
-  useEffect(() => {
-    if (values.length) {
-      let bookNames = values
-        .filter((book) => !book.return)
-        .map((book) => book.bookname)
-        .flat();
-      console.log(bookNames);
-      setBorrowedBooks(bookNames);
+  // useEffect(() => {
+  //   if (values.length) {
+  //     let bookNames = values
+  //       .filter((book) => !book.return)
+  //       .map((book) => book.bookname)
+  //       .flat();
+  //     console.log(bookNames);
+  //     setBorrowedBooks(bookNames);
+  //   }
+  // }, [values]);
+
+  // console.log("I AM BORROWED NOT RETURNED DATA");
+  // console.log(borrowedBooks);
+
+  const handleToReturn = async (data, id) => {
+    const borrowingUrl = "borrowing";
+    const updatedBorrow = {
+      member_id: "4",
+      issuedate: data.issuedate,
+      returndate: data.returndate,
+      bookname: data.bookname,
+      return: true,
+    };
+    console.log("NOT RETURNED DATA");
+    console.log(updatedBorrow);
+
+    try {
+      const res = await updateSpecificData(
+        updatedBorrow,
+        `${data.id}`,
+        `${borrowingUrl}`
+      );
+      console.log(res);
+      setRefresh(!refresh);
+    } catch (err) {
+      console.log(err);
+   }
+
+    //fetch books by name 
+    for (const bookName of data.bookname) {
+      const url = `http://localhost:3000/books?name=${bookName}`;
+    
+      try {
+        const res = await getSpecificData(url);
+        const bookData = res[0]; // assuming the response is an array with one item
+        const quantityToAdd = 1;
+        const updatedBook = { ...bookData, quantity: bookData.quantity + parseInt(quantityToAdd)};
+        const bookURL = "books";
+    
+        console.log("Updated Book")
+        console.log(updatedBook)
+    
+        try {
+          const res = await updateSpecificData(
+            updatedBook,
+            `${bookData.id}`,
+            `${bookURL}`
+          );
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }, [values]);
-
-  console.log("I AM BORROWED NOT RETURNED DATA");
-  console.log(borrowedBooks);
-
   
-
-  const handleToReturn =  async(data, id) => {
-
-    //Get Specific Book Object
-
-    const url = `http://localhost:3000/books?name=${data}`;
-
-   // try {
-      const res =  await getSpecificData(url);
-      setBookData(res);
-      console.log(bookData);
-
-      // const updatedBooks = bookData.map((book) => {
-      //   if (book.name === data) {
-      //     return {
-      //       ...book,
-      //       quantity: book.quantity + 1,
-      //     };
-      //   } else {
-      //     return book;
-      //   }
-      // });
-
-      // console.log("updated quantity");
-      // console.log(updatedBooks);
-
-      //Update books collection quantity
-
-      // const bookurl = "books";
-      // for (let i = 0; i < updatedBooks.length; i++) {
-      //   let bookId = updatedBooks[i].id;
-      //   try {
-      //     const res = await updateSpecificData(
-      //       updatedBooks[i],
-      //       `${bookId}`,
-      //       `${bookurl}`
-      //     );
-      //     console.log(res);
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // }
-
-      //Get not returned in borrowing list
-
-      // const notReturned = values.filter((book) => book.return);
-      // const updatedBorrow = notReturned.map((borrow) => {
-      //   if (borrow.return) {
-      //     return {
-      //       ...borrow,
-      //       return: true,
-      //     };
-      //   } else {
-      //     return borrow;
-      //   }
-      // });
-      // console.log("NOT RETURNED DATA");
-      // console.log(updatedBorrow);
-
-      //Update borrowing list
-
-      // const borrowingUrl = "borrowing";
-      // for (let i = 0; i < updatedBorrow.length; i++) {
-      //   let borrowId = updatedBooks[i].id;
-      //   try {
-      //     const res = await updateSpecificData(
-      //       updatedBorrow[i],
-      //       `${borrowId}`,
-      //       `${borrowingUrl}`
-      //     );
-      //     console.log(res);
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // }
-
-      //button disable state update
-      setButtonStates((prevStates) => ({
-        ...prevStates,
-        [id]: true,
-      }));
-  //  } catch (err) {
-    //  console.log(err);
-  //  }
+    //button disable state update
+    setButtonStates((prevStates) => ({
+      ...prevStates,
+      [id]: true,
+    }));
   };
-
-  //console.log(bookNames);
 
   if (!context.user?.role) {
     return navigate("/", { replace: true });
@@ -167,24 +145,24 @@ const BorrowedList = () => {
             <thead>
               <tr>
                 <th>Name</th>
-                {/* <th>Issuedate</th>
-                <th>Returndate</th> */}
+                {/* <th>Issuedate</th>*/}
+                <th>Returndate</th>
                 <th>Action</th>
                 {/* <th>ISBN</th> */}
                 {/* <th colSpan={2}>Action</th> */}
               </tr>
             </thead>
             <tbody>
-              {borrowedBooks &&
-                borrowedBooks.map((row, index) => (
+              {values &&
+                values.map((row, index) => (
                   <tr>
-                    <td>{row}</td>
-                    {/* <td>{row.issuedate}</td>
-                    <td>{row.returndate}</td> */}
+                    <td>{row.bookname.join(",")}</td>
+                    <td>{row.returndate}</td>
+                    {/*<td>{row.returndate}</td> */}
                     <td>
                       <button
                         className="btn btn-primary"
-                        onClick={() => handleToReturn(row, index)}
+                        onClick={() => handleToReturn(row)}
                         disabled={buttonStates[index]}
                       >
                         Return
