@@ -1,25 +1,31 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { formatDate } from "../../utils/formatedate";
-import { addData, updateMultipleData, updateData, updateSpecificData, getBooks } from "../helper/apicalls";
+import { addData, updateSpecificData, getBooks } from "../helper/apicalls";
 import UserContext from "../../utils/UserContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 const Cart = () => {
 
   const context = useContext(UserContext);
   const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
   //localStorage.clear();
-  const [bookQuantities, setBookQuantities] = useState({});
+  //const [bookQuantities, setBookQuantities] = useState({});
 
   const [cart, setCart] = useState(cartData);
-  const [data, setData] = useState([]);
-  const navigate = useNavigate();
+ // const [data, setData] = useState([]);
+ 
 
   const [books, setBooks] = useState([]);
-  const [updatedbooks, setUpdatedBooks] = useState([]);
-
+ // const [updatedbooks, setUpdatedBooks] = useState([]);
+ 
   const bookIds = cart.map((book) => book.id);
   console.log(bookIds);
+
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    preload();
+  }, []);
 
   const preload = async () => {
     try {
@@ -30,12 +36,6 @@ const Cart = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    preload();
-  }, []);
-
-
 
   const handleClick = async() => {
 
@@ -56,10 +56,10 @@ const Cart = () => {
     }
 
      let borrowing = "borrowing";
-     console.log(borrowObject);
+    //  console.log(borrowObject);
      
-     console.log(bookIds);
-     console.log(books)
+    //  console.log(bookIds);
+    //  console.log(books)
 
      const updatedData = books.map(item => {
       if (bookIds.includes(item.id)) {
@@ -70,38 +70,35 @@ const Cart = () => {
         return item;
       }
     });
-  setBooks(updatedData);
-  console.log(updatedData);
 
-    console.log("updated quantity");
-    console.log(updatedData);
+  setBooks(updatedData);
+  console.log("updated quantity");
+  console.log(updatedData);
 
      const bookurl = "books";
   
-
-     for (let i = 0; i < updatedData.length; i++) {
+    for(let i = 0; i < updatedData.length; i++){
       const bookId = updatedData[i].id;
-      const bookData = updatedData[i];
-      try {
+      const bookData = updatedData[i].data;
+
+      try{
         const res = await updateSpecificData(bookData, `${bookId}`, `${bookurl}`);
         console.log(res);
-      } catch (err) {
+      }
+      catch(err){
         console.log(err);
       }
     }
-    
    
-   addData(borrowObject, borrowing).then(res => {
-    
-     localStorage.clear();
-     navigate('/listofavailable')
-
+    addData(borrowObject, borrowing).then(res =>{
+      localStorage.clear();
+      navigate('/listofavailable')
     })
-    
 
   };
 
-  useEffect(() => {}, []);
+ 
+
   const formStyle = {
     maxWidth: "600px",
     margin: "80px auto",
@@ -129,7 +126,7 @@ const Cart = () => {
           <button
             type="button"
             class="btn btn-primary btn-block"
-            onClick={() => handleClick()}
+            onClick={handleClick}
           >
             Borrow
           </button>

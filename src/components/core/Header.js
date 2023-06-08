@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import axios from "axios";
 import UserContext from "../../utils/UserContext";
 import { useNavigate } from "react-router-dom";
+
 const Header = () => {
   const context = useContext(UserContext);
   console.log(context);

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getDataByID, updateData, addData } from "../helper/apicalls";
 import UserContext from "../../utils/UserContext";
@@ -42,19 +41,19 @@ const AddMembers = () => {
   const members = "members";
   const users = "user";
 
-  const preload = () => {
-    getDataByID(id, members).then((res) => {
-      if (res) {
-        setValues(res);
-      }
-    });
-  };
-  
-  
   useEffect(() => {
     preload()
   }, []);
+
   
+ const preload = () =>{
+  getDataByID(id, members)
+  .then((res) => {
+    if(res){
+      setValues(res);
+    }
+  });
+ }
 
   const saveMembers = () => {
     let newObj = {
@@ -86,17 +85,20 @@ const AddMembers = () => {
         "role": "member"
       }
       
+      
         addData(newObj, members).then(res => {
         //  navigate("/listmembers");
         })
-        addData(userObj, users).then(res => {
-         // navigate("/listmembers");
-            navigate("/listmembers");
+  
+        addData(userObj, users)
+        .then(res =>{
+          navigate("/listmembers");
         })
     }
     else{
       
-      updateData(newObj, id, members).then(res =>{navigate('/listmembers');})
+      updateData(newObj, id, members)
+      .then(res => navigate('/listmembers'))
       .catch(err => console.log(err))
     }
 
@@ -192,15 +194,13 @@ const AddMembers = () => {
               id="borrowing"
               placeholder="Enter Borrowed Books"
               value={borrowing}
-              onChange={(e) =>
-                setValues({ ...values, borrowing: e.target.value })
-              }
+              onChange={(e) =>setValues({ ...values, borrowing: e.target.value })}
             />
           </div>
           <button
             className="btn bg-primary text-white"
             style={{ display: "block", width: "100%" }}
-            onClick={() => saveMembers()}
+            onClick={saveMembers}
           >
             Save Member
           </button>

@@ -10,7 +10,17 @@ const NotReturnedBooks = () => {
   const [values, setValues] = useState([]);
 
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  const [buttonStates, setButtonStates] = useState({});
+ // const [buttonStates, setButtonStates] = useState({});
+
+ useEffect(() => {
+  preload();
+}, []);
+
+
+useEffect(() => {
+  getBookNames();
+ }, [values]);
+
 
   const preload = async () => {
     try {
@@ -21,11 +31,8 @@ const NotReturnedBooks = () => {
     }
   };
 
-  useEffect(() => {
-    preload();
-  }, []);
 
-  useEffect(() => {
+  const getBookNames = () =>{
     if (values.length) {
       let bookNames = values
         .filter((book) => !book.return)
@@ -34,7 +41,10 @@ const NotReturnedBooks = () => {
       console.log(bookNames);
       setBorrowedBooks(bookNames);
     }
-  }, [values]);
+  }
+  
+
+
 
   console.log(values);
 

@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 import { getDamagedBooks } from "../helper/apicalls";
 import { Link } from "react-router-dom";
 
-const ListOfDmagedBooks = () => {
+const ListOfDamagedBooks = () => {
+
+
   const context = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -13,6 +15,10 @@ const ListOfDmagedBooks = () => {
 
 
   const [count, setCount] = useState(0);
+
+  useEffect(() =>{
+    preload();
+  },[]);
 
   const handleIncrement = () => {
     setCount(count + 1);
@@ -26,17 +32,14 @@ const ListOfDmagedBooks = () => {
 
   const books = "books";
 
-  const preload = () => {
-    getDamagedBooks(books).then((res) => setValues(res));
-  };
-
-  useEffect(() => {
-    preload();
-  }, []);
+  const preload = () =>{
+    getDamagedBooks(books)
+    .then((res)=> setValues(res));
+  }
 
   console.log(values);
 
-  if (!context.user?.role) {
+  if(!context.user?.role){
     return navigate("/", { replace: true });
   }
 
@@ -106,4 +109,4 @@ const ListOfDmagedBooks = () => {
   );
 };
 
-export default ListOfDmagedBooks;
+export default ListOfDamagedBooks;

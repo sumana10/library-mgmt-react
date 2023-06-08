@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 import {
   getBorrowedDetails,
   updateSpecificData,
-  updateByName,
-  getSpecificData,
-  updateData,
+  getSpecificData
 } from "../helper/apicalls";
 import { Outlet, Link } from "react-router-dom";
 
@@ -16,12 +14,14 @@ const BorrowedList = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState([]);
 
-  const [borrowedBooks, setBorrowedBooks] = useState([]);
+  //const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [buttonStates, setButtonStates] = useState({});
-  const [bookData, setBookData] = useState([]);
+ // const [bookData, setBookData] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-
+  useEffect(() => {
+    preload();
+  }, [refresh]);
   //Initial loading of borrowing list
   const preload = async () => {
     try {
@@ -31,14 +31,6 @@ const BorrowedList = () => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    preload();
-  }, []);
-
-  useEffect(() => {
-    preload();
-  }, [refresh]);
 
   console.log("I AM BORROWED DATA");
   console.log(values);

@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-// import {getBooks, deleteBooks} from "./helper/bookapicall";
 import UserContext from "../../utils/UserContext";
 import { getData, deleteData } from "../helper/apicalls";
 import { Outlet, Link, Route } from "react-router-dom";
-import ListOfAvailableBooks from "./ListOfAvailableBooks";
-import ListOfDmagedBooks from "./ListOfDamagedBooks";
+
 
 const ListBooks = () => {
+
   const context = useContext(UserContext);
 
   console.log(context.user?.role);
@@ -18,36 +16,31 @@ const ListBooks = () => {
 
   const books = "books";
 
-  const preload = () => {
-    getData(books).then((res) => setValues(res));
-  };
-
   useEffect(() => {
     preload();
   }, []);
 
-  const handleDelete = (id) => {
-    deleteData(id, books).then((data) => {
-      preload();
-    });
-  };
 
-  const handleUpdate = (id) => {
+  const preload = () =>{
+    getData(books)
+    .then((res) => setValues(res));
+  }
+
+  const handleDelete = (id) =>{
+    deleteData(id, books)
+    .then((data) =>{
+      preload();
+    })
+  }
+
+  const handleUpdate = (id) =>{
     const updateurl = `/addbooks?id=${id}`;
     navigate(updateurl);
-  };
+  }
 
-  if (context.user?.role !== "librarian") {
+  if(context.user?.role !== "librarian"){
     return navigate("/", { replace: true });
   }
-  // if (!context.user?.role || (context.user?.role !== "Librarian" && context.user?.role !== "OtherRole")) {
-  //   return navigate('/some-other-page', { replace: true });
-  // }
-  /** 
-   * 
-   * 
-   * 
-   * **/
 
   return (
     <>

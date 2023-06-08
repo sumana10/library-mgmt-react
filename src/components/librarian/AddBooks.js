@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getDataByID, updateData, addData } from "../helper/apicalls";
 
@@ -7,7 +6,7 @@ const AddBooks = () => {
 
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
-  const books = "books"
+  const books = "books";
   
 
   const [values, setValues] = useState({
@@ -34,18 +33,19 @@ const AddBooks = () => {
 
   const navigate = useNavigate();
 
-  const preload = () => {
-    getDataByID(id, books).then((res) => {
-      if (res) {
-        setValues(res);
-      }
-    });
-  };
   
-  
-  useEffect(() => {
-    preload()
-  }, []);
+
+  useEffect(() =>{
+    preload();
+  },[])
+
+  const preload = () =>{
+    getDataByID(id, books)
+    .then((res) =>{
+      if(res) setValues(res);
+    })
+  }
+ 
   
 
   const saveBooks = () => {
@@ -62,13 +62,15 @@ const AddBooks = () => {
 
     if(!id){
       
-        addData(newObj, books).then(res => {
-          navigate("/listbooks");
-        })
+        addData(newObj, books)
+        .then(res => {
+          navigate("/listbooks")
+        });
     }
     else{
       
-      updateData(newObj, id, books).then(res =>{navigate('/listbooks');})
+      updateData(newObj, id, books)
+      .then(res => navigate('/listbooks'))
       .catch(err => console.log(err))
     }
 
@@ -89,7 +91,7 @@ const AddBooks = () => {
               id="name"
               placeholder="Enter Book Name"
               value={name}
-              onChange={(e) => setValues({ ...values, name: e.target.value })}
+              onChange={(e) => setValues({...values, name: e.target.value})}
             />
           </div>
           <div className="form-group mb-3">
@@ -184,7 +186,7 @@ const AddBooks = () => {
           <button
             className="btn bg-primary text-white"
             style={{ display: "block", width: "100%" }}
-            onClick={() => saveBooks()}
+            onClick={saveBooks}
           >
             Enter Books
           </button>

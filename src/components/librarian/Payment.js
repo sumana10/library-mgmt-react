@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 import { addData } from "../helper/apicalls";
-import {ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+
 const Payment = () => {
  
   const context = useContext(UserContext);
@@ -29,13 +29,13 @@ const Payment = () => {
 
    console.log(data);
 
-   addData(data, "payment").then(res => {
-    //  navigate("/listmembers");
+    addData(data, "payment")
+    .then(res =>{
       setData({
         ...data,
         member_id: "",
-        date: "",
-        fees: "",
+        date:"",
+        fees:""
       })
     })
     toast("Payment Done");
@@ -45,7 +45,8 @@ const Payment = () => {
     maxWidth: "600px",
     margin: "80px auto",
   };
-  if (context.user?.role !== "librarian") {
+
+  if(context.user?.role !== "librarian"){
     return navigate("/", { replace: true });
   }
   return (
@@ -103,7 +104,7 @@ const Payment = () => {
         <button
           className="btn btn-primary btn-block"
           style={{ display: "block", width: "100%" }}
-          onClick={() => handlePayment()}
+          onClick={handlePayment}
         >
           Submit
         </button>

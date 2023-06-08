@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getBorrowedDetails } from "../helper/apicalls";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
@@ -10,18 +10,24 @@ const ReturnedBooks = () => {
   const [values, setValues] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
 
+   
+
+  useEffect(() => {
+    preload();
+  }, []);
+
   const preload = async () => {
     try {
-      const res = await getBorrowedDetails(4);
+      const res = await getBorrowedDetails(4, true);
       setValues(res);
     } catch (error) {
       console.error(error);
     }
   };
 
-  useEffect(() => {
-    preload();
-  }, []);
+
+  console.log("Returned Books")
+  console.log(values);
 
   useEffect(() => {
     if (values.length) {

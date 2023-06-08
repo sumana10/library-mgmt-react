@@ -104,7 +104,7 @@ const Login = () => {
         <button
           className="btn btn-primary btn-block"
           style={{ display: "block", width: "100%" }}
-          onClick={() => handleLogin()}
+          onClick={handleLogin}
         >
           Submit
         </button>

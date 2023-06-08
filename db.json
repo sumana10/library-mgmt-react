@@ -15,25 +15,14 @@
   ],
   "books": [
     {
-      "name": "Finish What You Start",
-      "author": " Dan Sullivan ",
-      "category": "self-help",
-      "language": "English",
-      "isbn": "1401964362",
-      "quantity": 4,
-      "damage": "1",
-      "availability": true,
-      "id": 3
-    },
-    {
       "name": "The Gap and the Gain",
       "author": " Peter Hollins",
       "category": "Personal Development",
       "language": "English",
       "isbn": "164743050X",
+      "quantity": 42,
+      "damage": "2",
       "availability": true,
-      "quantity": 43,
-      "damage": "1",
       "id": 6
     },
     {
@@ -41,17 +30,6 @@
       "name": "The Psychology of Money",
       "author": "Morgan Housel",
       "category": "non-fiction",
-      "language": "English",
-      "isbn": "9780349413686",
-      "quantity": 8,
-      "damage": "0",
-      "availability": true
-    },
-    {
-      "id": 11,
-      "name": "The Intelligent Investor",
-      "author": " Benjamin Graham ",
-      "category": "investing value",
       "language": "English",
       "isbn": "9780349413686",
       "quantity": 8,
@@ -90,6 +68,17 @@
       "quantity": 9,
       "damage": "0",
       "availability": true
+    },
+    {
+      "name": "How to Win Friends and Influence People",
+      "author": "Dale Carnegie",
+      "category": "Personal Development",
+      "language": "English",
+      "isbn": "9387944867",
+      "quantity": "10",
+      "damage": "1",
+      "availability": true,
+      "id": 16
     }
   ],
   "user": [
@@ -110,6 +99,12 @@
       "password": "u&Nfs!",
       "role": "member",
       "id": 3
+    },
+    {
+      "email": "harkirat@gmail.com",
+      "password": "W0f0yF",
+      "role": "member",
+      "id": 4
     }
   ],
   "members": [
@@ -122,16 +117,6 @@
       "fine": 0,
       "borrowing": "The Power of Your Subconscious Mind, Atomic Habits",
       "id": 2
-    },
-    {
-      "name": "John Smith",
-      "email": "jsmith@gmail.com",
-      "phone": "555-555-5555",
-      "issuedate": "2023-05-31",
-      "expiredate": "2023-04-20",
-      "fine": "50",
-      "borrowing": "The Power of Your Subconscious Mind, Atomic Habits",
-      "id": 3
     },
     {
       "name": "Sarah Lee",
@@ -149,9 +134,19 @@
       "phone": "555-987-6543",
       "issuedate": "2023-04-30",
       "expiredate": "2023-04-21",
-      "fine": 0,
+      "fine": "500",
       "borrowing": "The 7 Habits of Highly Effective People, Think and Grow Rich",
       "id": 5
+    },
+    {
+      "name": "Harkirat",
+      "email": "harkirat@gmail.com",
+      "phone": "06291068170",
+      "issuedate": "2023-06-06",
+      "expiredate": "2023-06-06",
+      "fine": "100",
+      "borrowing": "The Power of Your Subconscious Mind, Atomic Habits",
+      "id": 6
     }
   ],
   "payment": [
@@ -178,6 +173,12 @@
       "date": "2023-04-15",
       "fees": "500",
       "id": 4
+    },
+    {
+      "member_id": "4",
+      "date": "2023-06-06",
+      "fees": "400",
+      "id": 5
     }
   ],
   "borrowing": [
@@ -188,7 +189,7 @@
       "bookname": [
         "The Psychology of Money"
       ],
-      "return": false,
+      "return": true,
       "id": 6
     },
     {
@@ -211,6 +212,41 @@
       ],
       "return": true,
       "id": 8
+    },
+    {
+      "member_id": "4",
+      "issuedate": "08-06-2023",
+      "returndate": "08-07-2023",
+      "bookname": [
+        "Finish What You Start",
+        "The Gap and the Gain",
+        "The Psychology of Money"
+      ],
+      "return": false,
+      "id": 9
+    },
+    {
+      "member_id": "4",
+      "issuedate": "08-06-2023",
+      "returndate": "08-07-2023",
+      "bookname": [
+        "Finish What You Start",
+        "The Gap and the Gain",
+        "The Psychology of Money"
+      ],
+      "return": true,
+      "id": 10
+    },
+    {
+      "member_id": "4",
+      "issuedate": "08-06-2023",
+      "returndate": "08-07-2023",
+      "bookname": [
+        "The Gap and the Gain",
+        "The Psychology of Money"
+      ],
+      "return": true,
+      "id": 12
     }
   ],
   "profile": {

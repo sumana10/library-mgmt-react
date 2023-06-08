@@ -1,13 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 import { getDataAvailable } from "../helper/apicalls";
 import { Link } from "react-router-dom";
-import {ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+
 const ListOfAvailableBooks = () => {
+
+
   const context = useContext(UserContext);
 
   const navigate = useNavigate();
+
   const [values, setValues] = useState([]);
 
   const [cartData, setCartData] = useState([]);
@@ -27,14 +31,17 @@ const ListOfAvailableBooks = () => {
 
   const books = "books";
 
+  useEffect(() => {
+    preload();
+  }, []);
+  
   const handleAddToCart = (item, id) => {
     
-
-      const updatedCartData = [...cartData, item];
-      setCartData(updatedCartData);
+      // const updatedCartData = [...cartData, item];
+      // setCartData(updatedCartData);
       let email = context.user?.email;
-      console.log(updatedCartData);
-    
+     // console.log(updatedCartData);
+
       let cartObject = {
         "id": item.id,
         "name": item.name,
@@ -46,39 +53,36 @@ const ListOfAvailableBooks = () => {
     
       // Retrieve existing cart data from local storage, if any
       const existingCartData = JSON.parse(localStorage.getItem("cartData")) || [];
-    
+
       if(existingCartData.length < 3){
       // Add the new cart object to the existing cart data array
-      const updatedCartDataArray = [...existingCartData, cartObject];
-    
+      const updatedCartDataArray = [...existingCartData, cartObject];    
       // Store the updated cart data array into local storage as a stringified JSON object
       localStorage.setItem("cartData", JSON.stringify(updatedCartDataArray));
     
       /* disable button */
-    
+
       setButtonStates((prevStates) => ({
         ...prevStates,
         [id]: true,
-      }));
+      }))
     }else{
     //  alert("You have reached the maximum book allowed for borrowing")
-      toast("Reached the limit")
+      toast("You have reached the maximum book allowed for")
     }
     
   };
-  
 
-  const preload = () => {
-    getDataAvailable(books).then((res) => setValues(res));
-  };
 
-  useEffect(() => {
-    preload();
-  }, []);
+  const preload = () =>{
+    getDataAvailable(books)
+    .then((res) => setValues(res));
+  }
+ 
 
   console.log(values);
 
-  if (!context.user?.role) {
+  if(!context.user?.role){
     return navigate("/", { replace: true });
   }
 
